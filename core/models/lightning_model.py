@@ -1,4 +1,3 @@
-import re
 from pathlib import Path
 
 import numpy as np
@@ -9,6 +8,24 @@ from sklearn.model_selection import train_test_split
 from torch import nn
 from torch.nn import functional as F
 from torch.utils.data import DataLoader, Dataset
+
+from core.embedding_models import DummyEmbeddingModel
+from core.models.base_model import BaseMatchingModel
+from core.models.tools import preprocess_dataframe
+
+
+class PlDataset(Dataset):
+    def __init__(self, dataframe):
+        self.dataframe = dataframe
+
+    def __len__(self):
+        return len(self.dataframe)
+
+    def __getitem__(self, idx):
+        return (
+            torch.FloatTensor(self.dataframe.iloc[idx, 0]),
+            torch.FloatTensor([self.dataframe.iloc[idx, 1]]),
+        )
 
 
 class SimilarityNet(pl.LightningModule):
@@ -46,35 +63,32 @@ class SimilarityNet(pl.LightningModule):
         return torch.optim.Adam(self.parameters(), lr=1e-5)
 
 
-class PlDataset(Dataset):
-    def __init__(self, dataframe):
-        self.dataframe = dataframe
+class TorchMatchingModel(BaseMatchingModel):
+    def __init__(self, embedding_model=None):
+        self.model = None
+        self.embedding_model = embedding_model
 
-    def __len__(self):
-        return len(self.dataframe)
+    def predict(self, vacancy: str | np.ndarray, cv: str | np.ndarray) -> float:
+        if self.embedding_model is None:
+            self.embedding_model = DummyEmbeddingModel()
 
-    def __getitem__(self, idx):
-        return (
-            torch.FloatTensor(self.dataframe.iloc[idx, 0]),
-            torch.FloatTensor([self.dataframe.iloc[idx, 1]]),
-        )
+        if isinstance(vacancy, str):
+            vacancy = self.embedding_model.generate(vacancy)
 
+        if isinstance(cv, str):
+            cv = self.embedding_model.generate(cv)
 
-def change_type_to_list(x):
-    return np.array(
-        [
-            float(val)
-            for val in re.split(
-            "\s+", x.replace("[", "").replace("]", "").replace("\n", "")
-        )
-            if val
-        ]
-    )
+        emb = np.concatenate((cv, vacancy))
+        emb = torch.from_numpy(emb).float().unsqueeze(0)
 
+        with torch.no_grad():
+            return self.model(emb)[0].numpy()
 
-def preprocess_dataframe(df: pd.DataFrame) -> pd.DataFrame:
-    df["embedding"] = df.embedding.apply(lambda x: change_type_to_list(x))
-    return df
+    def load_model(self, model_class: pl.LightningModule, checkpoint_path: Path | str):
+        self.model = model_class.load_from_checkpoint(checkpoint_path=checkpoint_path)
+        self.model.eval()
+        print("Model successfully loaded")
+        pass
 
 
 if __name__ == "__main__":
