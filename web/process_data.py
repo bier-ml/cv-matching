@@ -1,5 +1,5 @@
 import io
-from typing import Union
+from typing import Union, Optional
 
 import pandas as pd
 from docx import Document
@@ -18,7 +18,6 @@ def read_docx(file: Union[bytes, bytearray]) -> str:
 def get_relevant_vacancies(
     cv_text: str, n_recommendations: int = 3, model_class=CosineModel
 ) -> list[str]:
-
     embedding_model = DummyEmbeddingModel()
     model = model_class(embedding_model=embedding_model)
     cv_emb = embedding_model.generate(cv_text)
@@ -29,3 +28,20 @@ def get_relevant_vacancies(
 
     sorted_vacancies = dataset.sort_values(by="similarity", ascending=False)
     return sorted_vacancies.vacancy_name.head(n_recommendations).tolist()
+
+
+def check_relevance(
+    cv_text: str,
+    job_name: str,
+    job_description: Optional[str] = "",
+    model_class=CosineModel,
+) -> float:
+    embedding_model = DummyEmbeddingModel()
+    model = model_class(embedding_model=embedding_model)
+
+    cv_emb = embedding_model.generate(cv_text)
+    vac_text = "\n".join([job_name, job_description])
+    vac_emb = embedding_model.generate(vac_text)
+
+    similarity = model.predict(cv_emb, vac_emb)
+    return similarity
