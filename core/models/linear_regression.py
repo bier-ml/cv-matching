@@ -13,7 +13,7 @@ from core.models.base_model import BaseMatchingModel
 
 
 class LinearRegressionModel(BaseMatchingModel):
-    def __init__(self, metric=metrics.brier_score_loss, embedding_model=None):
+    def __init__(self, metric=metrics.mean_squared_error, embedding_model=None):
         self.model = LinearRegression()
         self.metric = metric
         self.embedding_model = embedding_model
