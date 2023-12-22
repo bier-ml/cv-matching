@@ -72,21 +72,21 @@
 
 | Model                     | Embedding                      | Brier score | ROC-AUC | 
 |---------------------------|--------------------------------|-------------|---------|
-| **Linear Regression**     | **RuBERT-tiny**                | 0.56        | 0.35    |
-| **Linear Regression**     | **RuBERT**                     | 0.63        | 0.94    |
-| **Linear Regression**     | **Slavic BERT**                | 0.36        | 0.47    |
-| **Linear Regression**     | **Sentence RuBERT**            | 0.3         | 0.36    |
-| **Linear Regression**     | **Sentence Multilingual BERT** | 0.91        | 0.71    |
-| **CatBoost Regressor**    | **RuBERT-tiny**                | 0.69        | 0.17    |
-| **CatBoost Regressor**    | **RuBERT**                     | 0.7         | 0.74    |
-| **CatBoost Regressor**    | **Slavic BERT**                | 0.53        | 0.27    |
-| **CatBoost Regressor**    | **Sentence RuBERT**            | 0.01        | 0.88    |
-| **CatBoost Regressor**    | **Sentence Multilingual BERT** | 0.99        | 0.82    |
-| **Two Layers Perceptron** | **RuBERT-tiny**                | 0.46        | 0.8     |
-| **Two Layers Perceptron** | **RuBERT**                     | 0.55        | 0.65    |
-| **Two Layers Perceptron** | **Slavic BERT**                | 0.34        | 0.99    |
-| **Two Layers Perceptron** | **Sentence RuBERT**            | 0.86        | 0.79    |
-| **Two Layers Perceptron** | **Sentence Multilingual BERT** | 0.73        | 0.46    |
+| **Linear Regression**     | **RuBERT-tiny**                | 0.35        | 0.36    |
+| **Linear Regression**     | **RuBERT**                     | 0.21        | 0.29    |
+| **Linear Regression**     | **Slavic BERT**                | 0.36        | 0.33    |
+| **Linear Regression**     | **Sentence RuBERT**            | 0.41        | 0.36    |
+| **Linear Regression**     | **Sentence Multilingual BERT** | 0.24        | 0.22    |
+| **CatBoost Regressor**    | **RuBERT-tiny**                | 0.63        | 0.51    |
+| **CatBoost Regressor**    | **RuBERT**                     | 0.62        | 0.69    |
+| **CatBoost Regressor**    | **Slavic BERT**                | 0.62        | 0.58    |
+| **CatBoost Regressor**    | **Sentence RuBERT**            | 0.63        | 0.59    |
+| **CatBoost Regressor**    | **Sentence Multilingual BERT** | 0.61        | 0.69    |
+| **Two Layers Perceptron** | **RuBERT-tiny**                | 0.66        | 0.74    |
+| **Two Layers Perceptron** | **RuBERT**                     | 0.74        | 0.63    |
+| **Two Layers Perceptron** | **Slavic BERT**                | 0.61        | 0.62    |
+| **Two Layers Perceptron** | **Sentence RuBERT**            | 0.6         | 0.61    |
+| **Two Layers Perceptron** | **Sentence Multilingual BERT** | 0.7         | 0.61    |
 
 ## Deployment
 
