@@ -1,10 +1,11 @@
 import streamlit as st
 
 from web import DOCX_TYPE
-from web.process_data import read_docx
+from web.process_data import read_docx, get_relevant_vacancies
 
 
 def main():
+    text = None
     col1, col2 = st.columns(2)
     with col1:
         col1.subheader("Upload your Document")
@@ -21,7 +22,13 @@ def main():
     else:
         col2.info("No document uploaded yet.")
 
-    st.subheader("Interesting Job")
+    st.subheader("Relevant Vacancies")
+    if text:
+        vacancies = get_relevant_vacancies(text)
+        for i, vac in enumerate(vacancies):
+            st.info(f"{i + 1}. {vac}")
+
+    st.subheader("Any other interesting Vacancy?")
     job_name = st.text_input("Enter the job name")
     job_description = st.text_input("Enter the job description if applicable")
 
