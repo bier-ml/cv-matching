@@ -127,7 +127,7 @@ web-service. При загрузке своего резюме пользова�
 
 ```shell
 poetry shell
-poetry install
+poetry install --with web
 ```
 
 И запустить сервис
