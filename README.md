@@ -10,7 +10,7 @@
 - Hugginface infrastructure, Pytorch Lightning, CatBoost, NumPy for ML Part
 - Streamlit for a web-service
 - Pandas and Jupyter notebooks for data preprocessing and analysis
-- **ClearML for dataset versioning** (TODO)
+- DVC for dataset versioning
 
 ### Methodology
 
